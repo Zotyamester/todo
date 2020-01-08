@@ -36,8 +36,7 @@ def get_todos(path):
 		ts = []
 		for index, line in enumerate(f, start=1):
 			line = line.strip()
-			upper = line.upper()
-			if 'TODO' in upper or 'TO DO' in upper:
+			if 'TODO' in line.upper():
 				ts.append((index, line))
 		if len(ts) > 0:
 			todos.append((fname, ts))
