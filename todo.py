@@ -43,20 +43,31 @@ def get_todos(path):
 		f.close()
 	return todos
 
-def print_todos(path):
-	todos = get_todos(path)
+def print_todos(todos):
 	print('TODOs found in "{}"'.format(path))
 	for name, ts in todos:
 		print('\t' + name)
 		for i, t in ts:
 			print('\t\tLine {}: {}'.format(i, t))
 
+def write_todos(todos):
+	f = open('analysis.csv', 'w')
+	f.write('file;line;todo\n')
+	for name, ts in todos:
+		for i, t in ts:
+			f.write('{};{};{}\n'.format(name, i, t))
+	f.close()
+
 if __name__ == '__main__':
 	path = ''
 	if len(sys.argv) == 1:
 		path = os.getcwd()
-		print_todos(path)
+		todos = get_todos(path)
+		print_todos(todos)
+		write_todos(todos)
 	else:
 		for i in range(1, len(sys.argv)):
 			path = str(sys.argv[i])
-			print_todos(path)
+			todos = get_todos(path)
+			print_todos(todos)
+			write_todos(todos)
